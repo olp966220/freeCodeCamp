@@ -1,0 +1,24 @@
+<!-- In Sass, a mixin is a group of CSS declarations that can be reused throughout the style sheet. -->
+<!-- The definition starts with the @mixin at-rule, followed by a custom name. You apply the mixin using the @include at-rule. -->
+<style type='text/scss'>
+    @mixin shape($w, $h, $bg-color) {
+        width: $w;
+        height: $h;
+        background-color: $bg-color;
+    }
+    #square {
+      @include shape(50px, 50px, red);
+    }
+    
+    #rect-a {
+      @include shape(100px, 50px, blue);
+    }
+    
+    #rect-b {
+      @include shape(50px, 100px, orange);
+    }
+    </style>
+    
+    <div id="square"></div>
+    <div id="rect-a"></div>
+    <div id="rect-b"></div>
