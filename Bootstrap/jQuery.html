@@ -1,0 +1,51 @@
+<script>
+    $(document).ready(function() {
+        // Run as soon as browser has loaded page.
+        // $("button").addClass("animated bounce");    // Target by type
+        // $(".well").addClass("animated shake");  // Target by class
+        // $("#target3").addClass("animated fadeOut");  // Target by id
+        // Set a class once a time
+        // $("button").addClass("animated");
+        // $(".btn").addClass("shake");
+        // $("#target1").addClass("btn-primary");
+        // $("button").removeClass("btn-default");
+        // Change css
+        $("#target1").css("color", "red");
+        // $("#target1").prop("disabled", true); // Add a property
+        $("#target4").html("<em>#target4</em>");
+        $("#target4").remove(); // Remove element
+        $("#target2").appendTo("#right-well"); // Move element
+        $("#target5").clone().appendTo("#left-well"); // Clone element
+        $("#target1").parent().css("background-color", "red"); // Parent element
+        $("#right-well").children().css("color", "orange"); // Children element
+        $(".target:nth-child(2)").addClass("animated bounce"); // nth-child
+        $(".target:even").addClass("animated shake"); // even
+        $("body").addClass("animated hinge"); // all
+    });
+</script>
+<!-- Only change code above this line -->
+
+<!-- Mobile responsive -->
+<div class="container-fluid">
+    <!-- Color(text-primary) & center headline -->
+    <h3 class="text-primary text-center">jQuery Playground</h3>
+    <div class="row">
+        <!-- Split col -->
+        <div class="col-xs-6">
+            <h4>#left-well</h4>
+            <div id="left-well" class="well">
+                <button class="btn btn-default target" id="target1">#target1</button>
+                <button class="btn btn-default target" id="target2">#target2</button>
+                <button class="btn btn-default target" id="target3">#target3</button>
+            </div> <!-- Create a visual sense of depth for cols -->
+        </div>
+        <div class="col-xs-6">
+            <h4>#left-well</h4>
+            <div id="right-well" class="well">
+                <button class="btn btn-default target" id="target4">#target4</button>
+                <button class="btn btn-default target" id="target5">#target5</button>
+                <button class="btn btn-default target" id="target6">#target6</button>
+            </div> <!-- Create a visual sense of depth for cols -->
+        </div>
+    </div>
+</div>
