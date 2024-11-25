@@ -1,0 +1,1 @@
+In JSX, any code you write with curly braces { } will be treated as JavaScript. 
