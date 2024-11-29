@@ -1,0 +1,1 @@
+The Provider component allows you to provide state and dispatch to your React component
