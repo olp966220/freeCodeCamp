@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <script>
+            window.onload = function() {
+                getNewQuote();
+            }
+            function getNewQuote() {
+                const quotes = [
+                    {
+                        quote: "The only way to do great work is to love what you do.",
+                        author: "Steve Jobs"
+                    },
+                    {
+                        quote: "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+                        author: "Albert Schweitzer"
+                    },
+                    {
+                        quote: "It is our choices, Harry, that show what we truly are, far more than our abilities.",
+                        author: "J.K. Rowling"
+                    }
+                ];
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                const randomQuote = quotes[randomIndex];
+                document.getElementById('text').innerText = randomQuote.quote;
+                document.getElementById('author').innerText = '-' + randomQuote.author;
+                const tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(randomQuote.quote + ' -' + randomQuote.author);
+                document.getElementById('tweet-quote').href = tweetUrl;
+            }
+        </script>
+        <style>
+            #quote-box {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="quote-box">
+            <div id="text"></div>
+            <div id="author"></div>
+            <button id="new-quote" onclick="getNewQuote()">New Quote</button>
+            <a id="tweet-quote" href="http://twitter.com/intent/tweet" target="_blank">Tweet</a>
+        </div>
+    </body>
+</html>
