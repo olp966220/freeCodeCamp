@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Markdown Previewer</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.3/marked.min.js" integrity="sha512-7aRjMGJX+VgTMGWgWLpQxavdTKRc2LwCTAS4LmB7OLwGTpH84ehHQoAY/y1fUfprr2yMFC6toDLHpbGaDth9VQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <textarea id="editor" placeholder="Enter your markdown here...">
+# Heading1
+## Heading2
+[Link](https://www.example.com)
+
+```py
+print("Hello, world!")
+```
+
+- List item 1
+- List item 2
+> Block Quotes!
+![Image](https://via.placeholder.com/150)
+
+**Bold Text**
+        </textarea>
+        <div id="preview"></div>
+    </body>
+</html>
