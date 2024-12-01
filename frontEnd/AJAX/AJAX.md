@@ -1,0 +1,2 @@
+AJAX (Asynchronous JavaScript and XML)
+AJAX refers to a group of technologies that make asynchronous requests to a server to transfer data, then load any returned data into the page. And the data transferred between the browser and server is often in a format called JSON (JavaScript Object Notation).
