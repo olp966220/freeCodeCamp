@@ -20,7 +20,10 @@
        .attr("width", 25)
        .attr("height", (d, i) => 3 * d)
        .attr("fill", "navy")
-       .attr("class", "bar")
+       .attr("class", "bar")  // hover effect
+      //  Add toolkit
+       .append("title")
+       .text((d) => d)
 
     svg.selectAll("text")
        .data(dataset)
