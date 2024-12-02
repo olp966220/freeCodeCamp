@@ -3,8 +3,26 @@
       document.getElementById('getMessage').onclick = function(){
       // Add your code below this line
         // document.getElementsByClassName('message')[0].textContent = "Here is the message"
+        const headers = {
+              "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+              "accept-encoding": "gzip, deflate, br, zstd",
+              "accept-language": "en,zh-CN;q=0.9,zh;q=0.8,ja;q=0.7",
+              "cache-control": "max-age=0",
+              "cookie": "gbuuid=da96e603-9a39-4e1a-bbe2-1decea644dec; _csrf=3RNw5NVO5IUsebhZMPwt_iS5; csrf_token=FxZQ3jXP-S0hL1330zF8gaKUyZC0MC4FFbvc; jwt_access_token=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NUb2tlbiI6eyJpZCI6ImdKa2lIM3Vuc1k5dmRGZU90Y0h3aFlhdEpIUWRMaW5zakNpTXBrYllLOUJFUVNiM3ZKWkQzYzQ5ZWxPZzlGcG4iLCJ0dGwiOjc3NzYwMDAwMDAwLCJjcmVhdGVkIjoiMjAyNC0wOS0xOFQwMTozMTozOC40MzlaIiwidXNlcklkIjoiNjZlOWQwZDBiMDljZTUwM2MxZTc1NDZlIn0sImlhdCI6MTcyNjYyMzA5OH0.PeZHR2E7_1ZHhQFRRdTlmtonsCp7qlwEEqf9L0xuXio.Zo3XqI45MlUGvkuO0sanxajU34ZYmPWGjW%2BZhSuQN1A; __stripe_mid=3fbb0693-22a2-497b-a386-3bea9229633fb6740d; _ga_RSZ1QSGJLW=GS1.2.1727678359.1.1.1727679766.0.0.0; _ga_FKVJ4HT3MH=GS1.1.1727682017.2.0.1727682017.0.0.0; _ga=GA1.2.429549559.1727145586; _ga_8EWCVQCR64=GS1.2.1728722859.13.1.1728726805.0.0.0; _ga_SF1BGBDCNS=GS1.1.1728722859.14.1.1728726806.0.0.0; __stripe_sid=3f075f4b-0b26-45b4-83c3-0cc905892bf0ea0473",
+              "if-none-match": "W/\"5d78e15705dd0ec8e303cbabb819da4f59155b01\"",
+              "priority": "u=0, i",
+              "sec-ch-ua": "\"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"",
+              "sec-ch-ua-mobile": "?0",
+              "sec-ch-ua-platform": "\"Windows\"",
+              "sec-fetch-dest": "document",
+              "sec-fetch-mode": "navigate",
+              "sec-fetch-site": "none",
+              "sec-fetch-user": "?1",
+              "upgrade-insecure-requests": "1",
+              "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+          };
         const req = new XMLHttpRequest();
-        req.open("GET", '/json/cats.json', true);   // true is for asynchronous
+        req.open("GET", 'https://www.freecodecamp.org/json/cats.json', true);   // true is for asynchronous
         req.send();
         req.onload = function(){
           const json = JSON.parse(req.responseText);
