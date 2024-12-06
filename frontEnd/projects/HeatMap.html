@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <style>
+            h1, h2 {
+              text-align: center;
+            }
+        </style>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script>
+            let dataset = {};  // Declare dataset as an object
+
+            async function fetchData() {
+                try {
+                    const response = await fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json');
+                    if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                    }
+                    dataset = await response.json();  // Directly assign the data object to dataset
+                    console.log(dataset);  // Log the dataset to verify
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                }
+            }
+            fetchData();
+
+            console.log(dataset);
+            const w = 500;
+            const h = 500;
+            const padding = 30;
+            const svg = d3.select("body")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+
+            const xScale = d3.scaleLinear()
+                            .domain([0, d3.max(dataset, d => d)])
+                            .range([padding, w - padding]);
+            const yScale = d3.scaleLinear()
+                            .domain([0, d3.max(dataset, d => d)])
+                            .range([h - padding, padding])
+
+            const xAxis = d3.axisBottom(xScale);
+            const yAxis = d3.axisLeft(yScale);
+        </script>
+    </head>
+    <body>
+        <h1 id="title">Monthly Global Land-Surface Temperature</h1>
+        <h2 id="description">1753 - 2015: base temperature 8.66℃</h2>
+    </body>
+</html>
