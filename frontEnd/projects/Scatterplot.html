@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <title id="title">Scatterplot</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function(){
+                fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const dataset = data;
+                        console.log(dataset)
+                        const w = 500;
+                        const h = 500;
+                        const padding = 30;
+
+                        const parseTime = d3.timeParse("%M:%S");
+                        const formatTime = d3.timeFormat("%M:%S");
+
+                        const xScale = d3.scaleLinear()
+                            .domain([d3.min(dataset, d => d['Year']) - 1, d3.max(dataset, d => d['Year']) + 1])
+                            .range([padding, w - padding]); 
+                        
+                        const yScale = d3.scaleTime()
+                            .domain(d3.extent(dataset, d => parseTime(d['Time'])))
+                            .range([h - padding, padding]);
+                        
+                        const svg = d3.select("body")
+                            .append("svg")
+                            .attr("width", w)
+                            .attr("height", h);
+                        
+                        svg.selectAll("circle")
+                            .data(dataset)
+                            .enter()
+                            .append("circle")
+                            .attr("cx", d => xScale(d['Year']))
+                            .attr("cy", d => yScale(parseTime(d['Time'])))
+                            .attr("r", 5)
+                            .attr("class", "dot")
+                            .attr("fill", d => d['Doping'] ? "#FF0000" : "#0000FF")
+                            .attr("data-xvalue", d => d['Year'])
+                            .attr("data-yvalue", d => parseTime(d['Time']))
+                            .on("mouseover", function (event, d) {
+                                const tooltip = d3.select("#tooltip");
+                                tooltip.style("visibility", "visible")
+                                    .attr("data-year", d['Year'])
+                                    .html(`
+                                        <strong>Year:</strong> ${d['Year']}<br>
+                                        <strong>Time:</strong> ${d['Time']}<br>
+                                        <strong>Name:</strong> ${d['Name']}<br>
+                                        <strong>Country:</strong> ${d['Country']}<br>
+                                        <strong>Doping:</strong> ${d['Doping'] ? "Yes" : "No"}
+                                    `);
+                                tooltip.style("top", (event.pageY + 10) + "px")
+                                    .style("left", (event.pageX + 10) + "px");
+                            })
+
+                        const xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
+                        const yAxis = d3.axisLeft(yScale).tickFormat(formatTime);
+
+                        svg.append("g")
+                            .attr("transform", `translate(0, ${h - padding})`)
+                            .attr("class", "axis-x")
+                            .call(xAxis);
+                        
+                        svg.append("g")
+                            .attr("transform", `translate(${padding + 5}, 0)`)
+                            .attr("class", "axis-y")
+                            .call(yAxis);
+                        
+                        const legend = svg.append("g")
+                            .attr("class", "legend")
+                            .attr("transform", `translate(${w - padding - 20}, ${padding + 5})`);
+
+                        legend.append("rect")
+                            .attr("x", 0)
+                            .attr("y", 0)
+                            .attr("width", 20)
+                            .attr("height", 20)
+                            .attr("fill", "#FF0000")
+                            .attr("class", "doping-dot");
+
+                        legend.append("text")
+                            .attr("x", -125)
+                            .attr("y", 10)
+                            .text("Riders with doping allegations")
+                            .attr("class", "legend-text")
+                            .style("font-size", "10px");
+                        
+                        legend.append("rect")
+                            .attr("x", 0)
+                            .attr("y", 25)
+                            .attr("width", 20)
+                            .attr("height", 20)
+                            .attr("fill", "#0000FF")
+                            .attr("class", "no-doping-dot");
+                        
+                        legend.append("text")
+                            .attr("x", -140)
+                            .attr("y", 40)
+                            .text("Riders with no doping allegations")
+                            .attr("class", "legend-text")
+                            .style("font-size", "10px");
+                    })
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Scatterplot</h1>
+    </body>
+</html>
