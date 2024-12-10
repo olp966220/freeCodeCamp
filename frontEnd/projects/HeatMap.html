@@ -7,40 +7,37 @@
         </style>
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script>
-            let dataset = {};  // Declare dataset as an object
+            document.addEventListener('DOMContentLoaded', function(){
+                fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const dataset = data;
+                        const w = 500;
+                        const h = 500;
+                        const padding = 30;
+                        const svg = d3.select("body")
+                            .append("svg")
+                            .attr("width", w)
+                            .attr("height", h);
 
-            async function fetchData() {
-                try {
-                    const response = await fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json');
-                    if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                    }
-                    dataset = await response.json();  // Directly assign the data object to dataset
-                    console.log(dataset);  // Log the dataset to verify
-                } catch (error) {
-                    console.error('There was a problem with the fetch operation:', error);
-                }
-            }
-            fetchData();
+                        const xScale = d3.scaleLinear()
+                                        .domain([0, d3.max(dataset, d => d)])
+                                        .range([padding, w - padding]);
+                        const yScale = d3.scaleLinear()
+                                        .domain([0, d3.max(dataset, d => d)])
+                                        .range([h - padding, padding])
 
-            console.log(dataset);
-            const w = 500;
-            const h = 500;
-            const padding = 30;
-            const svg = d3.select("body")
-                .append("svg")
-                .attr("width", w)
-                .attr("height", h);
+                        const xAxis = d3.axisBottom(xScale);
+                        const yAxis = d3.axisLeft(yScale);
 
-            const xScale = d3.scaleLinear()
-                            .domain([0, d3.max(dataset, d => d)])
-                            .range([padding, w - padding]);
-            const yScale = d3.scaleLinear()
-                            .domain([0, d3.max(dataset, d => d)])
-                            .range([h - padding, padding])
+                        svg.append("g")
+                            .attr("id", "x-axis")
+                            .attr("transform", "translate(0," + (h - padding) + ")")
+                            .call(xAxis)
+                            })
 
-            const xAxis = d3.axisBottom(xScale);
-            const yAxis = d3.axisLeft(yScale);
+            })
+
         </script>
     </head>
     <body>
