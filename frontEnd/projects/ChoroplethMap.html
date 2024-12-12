@@ -32,6 +32,11 @@
                                     .style("opacity", 0)
                                     .style("position", "absolute")
                                     .style("background", "rgba(255, 255, 204, 0.9)")
+                                    .style("font", "12px Arial")
+                                    .style("padding", "10px")
+                                    .style("box-shadow", "1px 1px 10px rgba(128, 128, 128, 0.6)")
+                                    .style("border", "none")
+                                    .style("border-radix", "2px")
                     svg.append("g")
                         .selectAll("path")
                         .data(counties)
@@ -49,12 +54,12 @@
                             const tooltip = d3.select("#tooltip")
                             tooltip.style("opacity", 1)
                                     .html(
-                                        `${nameMap.${d.id}}`
+                                        `${nameMap.get(d.id)}, ${stateMap.get(d.id)}: ${educationMap.get(d.id)}%`
                                     )
                                     .style("left", event.pageX + "px")
                                     .style("top", event.pageY + "px")
+                                    .attr("data-education", educationMap.get(d.id))
                         })
-                        console.log(nameMap)
                     svg.append("path")
                         .datum(stateBorders)
                         .attr("class", "state")
@@ -66,6 +71,7 @@
                                     .attr("id", "legend")
                                     .attr("transform", "translate(0, 10)")
                     const legendWidth = 33
+                    const legendScale = d3.scaleLinear()
                     legend.selectAll("rect")
                         .data(colorScale.range())
                         .enter()
@@ -74,6 +80,7 @@
                         .attr("x", (d, i) => 600 + i * 33)
                         .attr("width", 33)
                         .attr("fill", d => d)
+                    
                 }) 
             })
         </script>
