@@ -48,7 +48,7 @@
                                   return b.height - a.height || b.value - a.value;
                                 });
                     treemap(root);
-                    const svg = d3.select("svg")
+                    const svg = d3.select("#tree-map")
                     var cell = svg.selectAll("g")
                         .data(root.leaves())                    
                         .enter()
@@ -65,10 +65,13 @@
                           .attr('height', function (d) {
                             return d.y1 - d.y0;
                           })
+                        .attr("data-name", d => d.data.name)
+                        .attr("data-category", d => d.data.category)
                         .attr("data-value", d => d.value)
                         .attr("fill", function (d) {
                             return color(d.data.category);
                           })
+                    const legend = svg.append
                     function sumBySize(d) {
                       return d.value;
                     }
@@ -107,5 +110,6 @@
         <h1 id="title">Video Game Sales</h1>
         <div id="description">Top 100 Most Sold Video Games Grouped by Platform</div>
         <svg id="tree-map" width="960" height="570"></svg>
+        <svg id="legend" width="500"></svg>
     </body>
 </html>
