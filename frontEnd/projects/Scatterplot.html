@@ -45,7 +45,6 @@
                             .attr("data-xvalue", d => d['Year'])
                             .attr("data-yvalue", d => parseTime(d['Time']))
                             .on("mouseover", (event, d) => {
-                                console.log(event);
                                 tooltip.style("opacity", 1);
                                 tooltip.attr("data-year", d['Year'])
                                     .html(`

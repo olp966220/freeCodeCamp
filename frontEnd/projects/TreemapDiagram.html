@@ -57,6 +57,12 @@
                         .attr('transform', function (d) {
                             return 'translate(' + d.x0 + ',' + d.y0 + ')';
                           });
+                    const tooltip = d3.select("body")
+                          .append("div")
+                          .attr("class", "tooltip")
+                          .attr("id", "tooltip")
+                          .style("opacity", 0)
+
                     cell.append("rect")
                         .attr("class", "tile")
                         .attr('width', function (d) {
@@ -71,7 +77,71 @@
                         .attr("fill", function (d) {
                             return color(d.data.category);
                           })
-                    const legend = svg.append
+                        .on("mouseover", (event, d) => {
+                            const tooltip = d3.select('#tooltip')
+                            tooltip.style("opacity", 0.7)
+                                .html(
+                                    `Name: ${d.data.name}
+                                    <br>Category: ${d.data.category}
+                                    <br>Value: ${d.data.value}`
+                                )
+                                .style('left', event.pageX + 10 + 'px')
+                                .style('top', event.pageY - 28 + 'px')
+                                .attr("data-value", d.data.value)
+                        })
+                        .on("mouseout", () => {
+                            d3.select('#tooltip').style("opacity", 0);
+                        })
+                    cell.append('text')
+                        .attr('class', 'tile-text')
+                        .selectAll('tspan')
+                        .data(function (d) {
+                            return d.data.name.split(/(?=[A-Z][^A-Z])/g);
+                        })
+                        .enter()
+                        .append('tspan')
+                        .attr('x', 4)
+                        .attr('y', function (d, i) {
+                            return 13 + i * 10;
+                        })
+                        .text(function (d) {
+                            return d;
+                        });
+                    var categories = root.leaves().map(d => d.data.category);
+                    categories = categories.filter(function (category, index, self) {
+                        return self.indexOf(category) == index;
+                    })
+                    const LEGEND_RECT_SIZE = 15;
+                    const LEGEND_H_SPACING = 150;
+                    const LEGEND_V_SPACING = 10;
+                    const legend = d3.select("#legend")
+                    var legendWidth = +legend.attr('width');
+                    var legendElemsPerRow = Math.floor(legendWidth / LEGEND_H_SPACING);
+                    var legendElem = legend.append("g")
+                        .attr("transform", "translate(60, 10)")
+                        .selectAll("g")
+                        .data(categories)
+                        .enter()
+                        .append("g")
+                        .attr("transform", function (d, i) {
+                            return (
+                                'translate(' +
+                                (i % legendElemsPerRow) * LEGEND_H_SPACING +
+                                ',' +
+                                (Math.floor(i / legendElemsPerRow) * LEGEND_RECT_SIZE +
+                                LEGEND_V_SPACING * Math.floor(i / legendElemsPerRow)) +
+                                ')'
+                            );
+                        })
+                    legendElem.append("rect")
+                        .attr("class", "legend-item")
+                        .attr("width", 15)
+                        .attr("height", 15)
+                        .attr("fill", d => color(d))
+                    legendElem.append("text")
+                        .attr("x", LEGEND_RECT_SIZE + 3)
+                        .attr("y", LEGEND_RECT_SIZE - 2)
+                        .text(d => d)
                     function sumBySize(d) {
                       return d.value;
                     }
@@ -100,9 +170,28 @@
                 text-align: center;
                 font-family: Arial, Helvetica, sans-serif;
             }
+            svg {
+                font: 10px sans-serif;
+                text-align: center;
+                display: block;
+                margin: auto;
+            }
+            .tile-text {
+                cursor: default;
+            }
             div {
                 display: block;
                 unicode-bidi: isolate;
+            }
+            div.tooltip {
+                position: absolute;
+                padding: 10px;
+                font: 12px Arial;
+                background: rgba(255, 255, 204, 0.95);
+                box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.6);
+                border: 0;
+                border-radius: 2px;
+                pointer-events: none;
             }
         </style>
     </head>
